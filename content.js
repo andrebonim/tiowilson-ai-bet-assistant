@@ -1,4 +1,4 @@
-// ==================== BETANO AI ASSISTANT ====================
+// ==================== TIO WILSON ASSISTENTE DE BET ====================
 let currentIcons = new Set();
 
 const DEFAULT_OPENROUTER_KEY = '';
@@ -144,7 +144,7 @@ function showBeautifulModal(gameInfo) {
 
   modal.innerHTML = `
     <div style="background:linear-gradient(90deg,#00ff9d,#00cc7a);padding:16px 20px;color:#000;font-weight:700;display:flex;justify-content:space-between;">
-      <span>🤖 Betano AI</span>
+      <span>🤖 Tio Wilson Assistente de Bet</span>
       <div>
         <span id="config-btn" style="cursor:pointer;margin-right:15px;">⚙️</span>
         <span id="close-btn" style="cursor:pointer;font-size:26px;">✕</span>
@@ -448,7 +448,7 @@ function scanForCards() {
     const cards = collectGameCards();
     cards.forEach(card => createFloatingIcon(card));
   } catch (e) {
-    console.error("Erro no scan Betano AI:", e);
+    console.error("Erro no scan Tio Wilson Assistente de Bet:", e);
   }
 }
 
