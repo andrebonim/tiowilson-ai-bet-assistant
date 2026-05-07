@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Betano AI Assistant",
+  "version": "1.1",
+  "description": "Assistente IA com OpenAI para Betano",
+  "icons": { "128": "icon128.png" },
+  "content_scripts": [
+    {
+      "matches": ["https://*.betano.com/*", "https://*.betano.bet.br/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": ["storage"],
+  "host_permissions": ["https://api.openai.com/*",
+    "https://openrouter.ai/*",
+    "https://*.openrouter.ai/*"]
+}
