@@ -4,7 +4,7 @@ let currentIcons = new Set();
 const DEFAULT_OPENROUTER_KEY = '';
 const OPENROUTER_MODEL = 'openrouter/free';
 
-const AI_PROMPT_BASE = `Você é um sharp bettor profissional especializado em value bets e bilhetes de alto retorno na Betano.
+const AI_PROMPT_BASE = `Responda em Português do Brasil. Você é um sharp bettor profissional especializado em value bets e bilhetes de alto retorno na Betano.
 
 Analise os jogos informados no final da instrução considerando:
 forma recente, xG/xGA, desfalques, provável escalação, motivação, mando, H2H e contexto da partida.
@@ -201,7 +201,7 @@ async function sendToAI(gameInfo) {
     showSettingsModal();
     return;
   }
-
+	
   btn.disabled = true;
   btn.textContent = "Gerando...";
   responseArea.style.display = 'block';
@@ -232,6 +232,8 @@ Risco: ${risk}`;
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${key}`
     };
+	
+	
   } else {
     apiUrl = 'https://api.openai.com/v1/chat/completions';
     model = 'gpt-4o-mini';
@@ -261,7 +263,7 @@ Risco: ${risk}`;
       })
     });
 
-	console.log(prompt);
+	//console.log(prompt);
 
     clearTimeout(timeout);
 
@@ -270,8 +272,19 @@ Risco: ${risk}`;
     if (!res.ok) {
       throw new Error(data.error?.message || data.message || `Erro HTTP ${res.status}`);
     }
+	let answer = '';
 
-    const answer = data.choices?.[0]?.message?.content || "Sem resposta";
+	//console.log(data.choices);
+	
+	if (config.provider === 'openrouter') {		
+		answer = data.choices?.[0]?.message?.reasoning || "Sem resposta";
+	}
+	
+	else{
+		answer = data.choices?.[0]?.message?.content || "Sem resposta";
+	}
+
+    
     responseArea.innerHTML = `<strong>Resposta:</strong><br><br>${escapeHtml(answer).replace(/\n/g, '<br>')}`;
 
   } catch (e) {
@@ -321,7 +334,7 @@ function isIgnoredLine(text) {
   if (/^\+\d+/.test(t)) return true;
 
   // Palavras-chave que devem ser ignoradas
-  const ignoreKeywords = /(popular|futebol|tenis|basquete|esports|volei|beisebol|hoquei|futsal|handebol|dardos|ao vivo|copa|libertadores|jogos|serie|campeonato|liga|league|resultado final|total de gols|ambas marcam|casa|empate|fora|risco|pedido|gerar bilhete)/i;
+  const ignoreKeywords = /(popular|futebol|tenis|basquete|esports|volei|beisebol|hoquei|futsal|handebol|dardos|ao vivo|copa|libertadores|jogos|serie|campeonato|liga|league|resultado final|total de gols|ambas marcam|casa|empate|fora|risco|pedido|gerar bilhete|CA TURBINADA)/i;
   
   return ignoreKeywords.test(t);
 }
